@@ -18,3 +18,4 @@ To get started with this project, follow these steps:
 7. Initialize the Terraform workspace: `terraform init`
 8. Review the planned changes: `terraform plan`
 9. Apply the changes: `terraform apply`
+10. Workflow changes
