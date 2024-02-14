@@ -6,9 +6,10 @@ provider "google" {
 
 # Define the VPC with regional routing and no auto-created subnets
 resource "google_compute_network" "vpc" {
-  name                    = var.vpc_name
-  routing_mode            = "REGIONAL"
-  auto_create_subnetworks = false
+  name                            = var.vpc_name
+  routing_mode                    = "REGIONAL"
+  auto_create_subnetworks         = false
+  delete_default_routes_on_create = true
 }
 
 # Define the webapp subnet
@@ -32,11 +33,5 @@ resource "google_compute_route" "webapp_route" {
   name             = "webapp-route"
   network          = google_compute_network.vpc.name
   dest_range       = "0.0.0.0/0"
-  next_hop_gateway = "global/gateways/default-internet-gateway"
-}
-
-# Create an internet gateway for the VPC
-resource "google_compute_router" "internet_gateway" {
-  name    = "internet-gateway"
-  network = google_compute_network.vpc.self_link
+  next_hop_gateway = "default-internet-gateway"
 }
