@@ -14,7 +14,7 @@ resource "google_compute_network" "vpc" {
 
 # Define the webapp subnet
 resource "google_compute_subnetwork" "webapp_subnet" {
-  name          = "webapp-subnet"
+  name          = var.webapp-subnet
   region        = var.region
   ip_cidr_range = var.webapp_subnet_cidr
   network       = google_compute_network.vpc.self_link
@@ -22,7 +22,7 @@ resource "google_compute_subnetwork" "webapp_subnet" {
 
 # Define the db subnet
 resource "google_compute_subnetwork" "db_subnet" {
-  name          = "db-subnet"
+  name          = var.db-subnet
   region        = var.region
   ip_cidr_range = var.db_subnet_cidr
   network       = google_compute_network.vpc.self_link
@@ -30,8 +30,8 @@ resource "google_compute_subnetwork" "db_subnet" {
 
 # Define a route to 0.0.0.0/0 for the webapp subnet
 resource "google_compute_route" "webapp_route" {
-  name             = "webapp-route"
+  name             = var.webapp-route
   network          = google_compute_network.vpc.name
-  dest_range       = "0.0.0.0/0"
+  dest_range       = var.route-destination-range
   next_hop_gateway = "default-internet-gateway"
 }
