@@ -6,7 +6,7 @@ provider "google" {
 
 # Define the VPC with regional routing and no auto-created subnets
 resource "google_compute_network" "vpc" {
-  name                            = var.vpc_name
+  name                            = var.vpc_nam
   routing_mode                    = "REGIONAL"
   auto_create_subnetworks         = false
   delete_default_routes_on_create = true
