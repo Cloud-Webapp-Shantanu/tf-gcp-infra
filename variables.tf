@@ -44,3 +44,9 @@ variable "route-destination-range" {
   type        = string
   description = "The destination range for the route"
 }
+
+variable "routing_mode" {
+  type        = string
+  description = "The routing mode for the VPC"
+  default     = "REGIONAL"
+}
