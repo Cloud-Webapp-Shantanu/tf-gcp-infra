@@ -33,5 +33,5 @@ resource "google_compute_route" "webapp_route" {
   name             = var.webapp-route
   network          = google_compute_network.vpc.name
   dest_range       = var.route-destination-range
-  next_hop_gateway = "default-internet-gateway"
+  next_hop_gateway = var.next_hop_gateway
 }

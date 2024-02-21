@@ -50,3 +50,9 @@ variable "routing_mode" {
   description = "The routing mode for the VPC"
   default     = "REGIONAL"
 }
+
+variable "next_hop_gateway" {
+  type        = string
+  description = "The next hop for the route"
+
+}
