@@ -23,7 +23,7 @@ variable "ssh_denied_ports" {
   type        = list(number)
 }
 
-variable "prtocol" {
+variable "protocol" {
   description = "The protocol for the firewall rule"
   type        = string
 }

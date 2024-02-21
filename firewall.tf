@@ -5,7 +5,7 @@ resource "google_compute_firewall" "webapp_firewall" {
   target_tags = var.target_tags
 
   allow {
-    protocol = var.prtocol
+    protocol = var.protocol
     ports    = var.allowed_ports
   }
 
@@ -18,7 +18,7 @@ resource "google_compute_firewall" "ssh_block_firewall" {
   target_tags = var.target_tags
 
   deny {
-    protocol = var.prtocol
+    protocol = var.protocol
     ports    = var.ssh_denied_ports
   }
 
