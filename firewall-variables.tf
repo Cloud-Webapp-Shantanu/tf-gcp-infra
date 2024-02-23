@@ -32,3 +32,8 @@ variable "webapp_ssh_firewall" {
   description = "The name of the SSH firewall rule"
   type        = string
 }
+
+variable "webapp_denyall_firewall" {
+  description = "The name of the deny all firewall rule"
+  type        = string
+}
