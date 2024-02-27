@@ -38,7 +38,7 @@ resource "google_compute_firewall" "ssh_block_firewall" {
 
   deny {
     protocol = var.protocol
-    ports    = var.ssh_denied_ports
+    ports    = var.denied_ports
   }
 
   source_ranges = var.source_ranges
