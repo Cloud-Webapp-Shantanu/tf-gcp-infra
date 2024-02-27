@@ -18,8 +18,8 @@ variable "allowed_ports" {
   type        = list(number)
 }
 
-variable "ssh_denied_ports" {
-  description = "The list of denied ports for SSH"
+variable "denied_ports" {
+  description = "The list of denied ports"
   type        = list(number)
 }
 

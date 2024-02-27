@@ -45,14 +45,39 @@ variable "route-destination-range" {
   description = "The destination range for the route"
 }
 
-variable "routing_mode" {
-  type        = string
-  description = "The routing mode for the VPC"
-  default     = "REGIONAL"
+variable "regional" {
+  type    = string
+  default = "REGIONAL"
 }
 
 variable "next_hop_gateway" {
   type        = string
   description = "The next hop for the route"
+}
 
+variable "service_networking_connection" {
+  type        = string
+  description = "The service networking connection"
+}
+
+variable "private_ip_address" {
+  type        = string
+  description = "The private IP address"
+
+}
+
+variable "vpc_peering" {
+  type        = string
+  description = "The purpose of the global address as VPC peering"
+}
+
+variable "internal" {
+  type        = string
+  description = "The internal address type"
+}
+
+variable "prefix_length" {
+  type        = number
+  description = "The prefix length for the global address"
+  default     = 16
 }
