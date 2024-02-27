@@ -46,6 +46,7 @@ resource "google_compute_global_address" "private_ip_address" {
   network       = google_compute_network.vpc.id
 }
 
+# Define a service networking connection
 resource "google_service_networking_connection" "vpc_psc" {
   network                 = google_compute_network.vpc.id
   service                 = var.service_networking_connection
