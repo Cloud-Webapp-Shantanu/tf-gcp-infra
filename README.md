@@ -18,4 +18,8 @@ To get started with this project, follow these steps:
 7. Initialize the Terraform workspace: `terraform init`
 8. Review the planned changes: `terraform plan`
 9. Apply the changes: `terraform apply`
-10. Workflow changes
+10. Destroy the infra: `terraform destroy`
+    
+## Github Workflow
+
+Github Workflow to validate terraform on pull request: .github/workflows/validation-workflow.yml

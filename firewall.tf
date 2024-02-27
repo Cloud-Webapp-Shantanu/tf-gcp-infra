@@ -30,11 +30,12 @@ resource "google_compute_firewall" "webapp_firewall" {
   source_ranges = var.source_ranges
 }
 
-# Firewall blocks SSH traffic
+# Firewall blocks SSH traffic on the specified ports with higher priority
 resource "google_compute_firewall" "ssh_block_firewall" {
   name        = var.webapp_ssh_firewall
   network     = google_compute_network.vpc.name
   target_tags = var.target_tags
+  priority    = 999
 
   deny {
     protocol = var.protocol

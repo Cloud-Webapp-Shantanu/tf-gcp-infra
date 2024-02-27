@@ -7,9 +7,9 @@ DB_PASSWORD="${DB_PASSWORD}"
 DB_PORT="${DB_PORT}"
 DB_HOST="${DB_HOST}"
 
+# Create a .env file in the webapp directory
 varenv="/opt/csye6225dir/webapp/.env"
 > "$varenv"
-# Use the variables in your script as needed
 {
 echo "DB_NAME: ${DB_NAME}"
 echo "DB_USER: ${DB_USER}"
