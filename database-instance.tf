@@ -35,7 +35,7 @@ resource "google_sql_user" "webapp_user" {
 # Random Password Generation
 resource "random_password" "webapp_password" {
   length  = var.password_length
-  special = true
+  special = false
   upper   = true
   lower   = true
   numeric = true
