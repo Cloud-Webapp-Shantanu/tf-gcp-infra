@@ -47,3 +47,23 @@ variable "instance_tags" {
   type        = list(string)
   description = "The tags to apply to the instance"
 }
+
+variable "service_account_id" {
+  type        = string
+  description = "The id of the service account to use for the VM"
+}
+
+variable "service_account_display_name" {
+  type        = string
+  description = "The display name of the service account to use for the VM"
+}
+
+variable "service_account_description" {
+  type        = string
+  description = "The description of the service account to use for the VM"
+}
+
+variable "service_account_scopes" {
+  type        = list(string)
+  description = "The scopes to apply to the service account"
+}

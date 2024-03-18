@@ -1,3 +1,11 @@
+# Create a Service Account for the VM Instance
+resource "google_service_account" "logging_sa" {
+  account_id   = var.service_account_id
+  display_name = var.service_account_display_name
+  description  = var.service_account_description
+  project      = var.project_id
+}
+
 # Create Compute Engine Instance
 resource "google_compute_instance" "webapp_instance" {
   name         = var.webapp_instance_name
@@ -31,6 +39,11 @@ resource "google_compute_instance" "webapp_instance" {
       DB_PORT     = var.database_port
       DB_HOST     = google_sql_database_instance.webapp_database_instance.private_ip_address
     })
+  }
+
+  service_account {
+    email  = google_service_account.logging_sa.email
+    scopes = var.service_account_scopes
   }
 }
 
