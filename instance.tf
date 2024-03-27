@@ -33,11 +33,13 @@ resource "google_compute_instance" "webapp_instance" {
 
   metadata = {
     startup-script = templatefile(var.startup_script, {
-      DB_NAME     = google_sql_database.webapp_database.name
-      DB_USER     = google_sql_user.webapp_user.name
-      DB_PASSWORD = google_sql_user.webapp_user.password
-      DB_PORT     = var.database_port
-      DB_HOST     = google_sql_database_instance.webapp_database_instance.private_ip_address
+      DB_NAME           = google_sql_database.webapp_database.name
+      DB_USER           = google_sql_user.webapp_user.name
+      DB_PASSWORD       = google_sql_user.webapp_user.password
+      DB_PORT           = var.database_port
+      DB_HOST           = google_sql_database_instance.webapp_database_instance.private_ip_address
+      PUBSUB_TOPIC_NAME = var.pubsub_topic_name
+      TOKEN_EXPIRY      = var.token_expiry
     })
   }
 

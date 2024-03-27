@@ -35,6 +35,16 @@ variable "db-subnet" {
   description = "The name of the db subnet"
 }
 
+variable "connector_subnet" {
+  type        = string
+  description = "The name of the connector subnet"
+}
+
+variable "connector_subnet_cidr" {
+  type        = string
+  description = "The CIDR range for the connector subnet"
+}
+
 variable "webapp-route" {
   type        = string
   description = "The name of the webapp route"
@@ -80,4 +90,14 @@ variable "prefix_length" {
   type        = number
   description = "The prefix length for the global address"
   default     = 16
+}
+
+variable "connector" {
+  type        = string
+  description = "The name of the VPC access connector"
+}
+
+variable "connector_machine_type" {
+  type        = string
+  description = "The machine type for the VPC access connector"
 }
