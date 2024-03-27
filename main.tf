@@ -52,3 +52,19 @@ resource "google_service_networking_connection" "vpc_psc" {
   service                 = var.service_networking_connection
   reserved_peering_ranges = [google_compute_global_address.private_ip_address.name]
 }
+
+resource "google_compute_subnetwork" "connector_subnet" {
+  name                     = var.connector_subnet
+  region                   = var.region
+  ip_cidr_range            = var.connector_subnet_cidr
+  network                  = google_compute_network.vpc.self_link
+  private_ip_google_access = true
+}
+
+resource "google_vpc_access_connector" "connector" {
+  name = var.connector
+  subnet {
+    name = google_compute_subnetwork.connector_subnet.name
+  }
+  machine_type = var.connector_machine_type
+}
