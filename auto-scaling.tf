@@ -35,7 +35,7 @@ resource "google_compute_region_instance_group_manager" "webapp_instance_group_m
   version {
     instance_template = google_compute_region_instance_template.webapp_instance_template.self_link
   }
-  distribution_policy_zones = ["us-east1-d", "us-east1-b", "us-east1-c"]
+  distribution_policy_zones = var.distribution_policy_zones
   named_port {
     name = var.named_port_name
     port = var.port
