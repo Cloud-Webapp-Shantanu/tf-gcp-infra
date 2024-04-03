@@ -3,9 +3,9 @@ variable "image_family" {
   description = "The image family to use for the VM"
 }
 
-variable "webapp_instance_name" {
+variable "webapp_instance_template_name" {
   type        = string
-  description = "The name of the webapp instance"
+  description = "The name of the webapp instance template"
 }
 
 variable "machine_type" {

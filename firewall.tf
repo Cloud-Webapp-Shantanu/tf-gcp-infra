@@ -16,19 +16,19 @@ resource "google_compute_firewall" "webapp_denyall_firewall" {
 }
 
 # Firewall allows ingress traffic on the specified ports with higher priority
-resource "google_compute_firewall" "webapp_firewall" {
-  name        = var.webapp_firewall
-  network     = google_compute_network.vpc.name
-  target_tags = var.target_tags
-  priority    = 999
+# resource "google_compute_firewall" "webapp_firewall" {
+#   name        = var.webapp_firewall
+#   network     = google_compute_network.vpc.name
+#   target_tags = var.target_tags
+#   priority    = 999
 
-  allow {
-    protocol = var.protocol
-    ports    = var.allowed_ports
-  }
+#   allow {
+#     protocol = var.protocol
+#     ports    = var.allowed_ports
+#   }
 
-  source_ranges = var.source_ranges
-}
+#   source_ranges = var.source_ranges
+# }
 
 # Firewall blocks SSH traffic on the specified ports with higher priority
 resource "google_compute_firewall" "ssh_block_firewall" {
@@ -37,9 +37,22 @@ resource "google_compute_firewall" "ssh_block_firewall" {
   target_tags = var.target_tags
   priority    = 999
 
-  deny {
+  allow {
     protocol = var.protocol
     ports    = var.denied_ports
+  }
+
+  source_ranges = var.source_ranges
+}
+
+resource "google_compute_firewall" "lb_firewall" {
+  name        = var.lb_firewall
+  network     = google_compute_network.vpc.name
+  target_tags = var.target_tags
+  priority    = 999
+  allow {
+    protocol = var.protocol
+    ports    = var.allowed_ports
   }
 
   source_ranges = var.source_ranges
