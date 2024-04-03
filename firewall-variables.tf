@@ -37,3 +37,8 @@ variable "webapp_denyall_firewall" {
   description = "The name of the deny all firewall rule"
   type        = string
 }
+
+variable "lb_firewall" {
+  description = "The name of the load balancer firewall rule"
+  type        = string
+}

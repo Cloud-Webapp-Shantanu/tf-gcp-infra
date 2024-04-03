@@ -6,31 +6,28 @@ resource "google_service_account" "logging_sa" {
   project      = var.project_id
 }
 
-# Create Compute Engine Instance
-resource "google_compute_instance" "webapp_instance" {
-  name         = var.webapp_instance_name
-  machine_type = var.machine_type
-  zone         = var.zone
-  tags         = var.instance_tags
-  boot_disk {
-    initialize_params {
-      image = data.google_compute_image.latest_custom_image.self_link
-      size  = var.boot_disk_size
-      type  = var.boot_disk_type
-    }
-  }
+data "google_compute_image" "latest_custom_image" {
+  family  = var.image_family
+  project = var.project_id
+}
 
+resource "google_compute_region_instance_template" "webapp_instance_template" {
+  name         = var.webapp_instance_template_name
+  machine_type = var.machine_type
+  region       = var.region
+  disk {
+    source_image = data.google_compute_image.latest_custom_image.self_link
+    disk_size_gb = var.boot_disk_size
+    type         = var.boot_disk_type
+  }
   network_interface {
+    network    = google_compute_network.vpc.self_link
+    subnetwork = google_compute_subnetwork.webapp_subnet.self_link
+    # Uncomment/Comment the following block to enable/disable external IP
     access_config {
       network_tier = var.network_tier
     }
-
-    queue_count = 0
-    stack_type  = var.stack_type
-    network     = google_compute_network.vpc.self_link
-    subnetwork  = google_compute_subnetwork.webapp_subnet.self_link
   }
-
   metadata = {
     startup-script = templatefile(var.startup_script, {
       DB_NAME           = google_sql_database.webapp_database.name
@@ -42,14 +39,9 @@ resource "google_compute_instance" "webapp_instance" {
       TOKEN_EXPIRY      = var.token_expiry
     })
   }
-
   service_account {
     email  = google_service_account.logging_sa.email
     scopes = var.service_account_scopes
   }
-}
-
-data "google_compute_image" "latest_custom_image" {
-  family  = var.image_family
-  project = var.project_id
+  tags = var.instance_tags
 }

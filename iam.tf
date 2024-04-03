@@ -26,3 +26,9 @@ resource "google_pubsub_topic_iam_binding" "pubsub_topic_publisher_binding" {
   ]
 }
 
+resource "google_project_iam_member" "pubsub_sa_token_creator" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountTokenCreator"
+  member  = "serviceAccount:${google_service_account.logging_sa.email}"
+}
+
