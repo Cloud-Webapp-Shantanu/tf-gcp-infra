@@ -82,3 +82,8 @@ variable "initial_delay_sec" {
   description = "The number of seconds to wait before starting to check the health of the instances"
   type        = number
 }
+
+variable "distribution_policy_zones" {
+  description = "The zones to distribute the instances across"
+  type        = list(string)
+}
