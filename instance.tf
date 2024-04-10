@@ -1,11 +1,3 @@
-# Create a Service Account for the VM Instance
-resource "google_service_account" "logging_sa" {
-  account_id   = var.service_account_id
-  display_name = var.service_account_display_name
-  description  = var.service_account_description
-  project      = var.project_id
-}
-
 data "google_compute_image" "latest_custom_image" {
   family  = var.image_family
   project = var.project_id
@@ -15,10 +7,14 @@ resource "google_compute_region_instance_template" "webapp_instance_template" {
   name         = var.webapp_instance_template_name
   machine_type = var.machine_type
   region       = var.region
+  depends_on   = [google_kms_crypto_key_iam_binding.vm_crypto_encrypter_decrypter]
   disk {
     source_image = data.google_compute_image.latest_custom_image.self_link
     disk_size_gb = var.boot_disk_size
     type         = var.boot_disk_type
+    disk_encryption_key {
+      kms_key_self_link = google_kms_crypto_key.webapp_vm_key.id
+    }
   }
   network_interface {
     network    = google_compute_network.vpc.self_link
@@ -40,8 +36,8 @@ resource "google_compute_region_instance_template" "webapp_instance_template" {
     })
   }
   service_account {
-    email  = google_service_account.logging_sa.email
-    scopes = var.service_account_scopes
+    email  = google_service_account.gcp_sa_cloud_vm.email
+    scopes = var.vm_service_account_scopes
   }
   tags = var.instance_tags
 }

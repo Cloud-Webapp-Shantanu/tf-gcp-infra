@@ -4,8 +4,14 @@ resource "random_id" "default" {
 
 resource "google_storage_bucket" "default" {
   name                        = "${random_id.default.hex}-gcf-source"
-  location                    = "US"
+  location                    = var.region
   uniform_bucket_level_access = true
+  encryption {
+    default_kms_key_name = google_kms_crypto_key.webapp_bucket_key.id
+  }
+  # Ensure the KMS crypto-key IAM binding for the service account exists prior to the
+  # bucket attempting to utilize the crypto-key.
+  depends_on = [google_kms_crypto_key_iam_binding.storage_crypto_encrypter_decrypter]
 }
 
 data "archive_file" "default" {
@@ -26,11 +32,12 @@ resource "google_cloudfunctions2_function" "verify_email_function" {
   description = var.verify_email_function_description
 
   service_config {
-    min_instance_count = var.min_instance_count
-    max_instance_count = var.max_instance_count
-    available_memory   = var.available_memory
-    timeout_seconds    = var.timeout_seconds
-    vpc_connector      = google_vpc_access_connector.connector.name
+    min_instance_count    = var.min_instance_count
+    max_instance_count    = var.max_instance_count
+    available_memory      = var.available_memory
+    timeout_seconds       = var.timeout_seconds
+    vpc_connector         = google_vpc_access_connector.connector.name
+    service_account_email = google_service_account.gcp_sa_cloud_function.email
     environment_variables = {
       DB_NAME         = google_sql_database.webapp_database.name
       DB_USER         = google_sql_user.webapp_user.name
