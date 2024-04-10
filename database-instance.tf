@@ -4,9 +4,8 @@ resource "google_sql_database_instance" "webapp_database_instance" {
   region              = var.region
   deletion_protection = false
   database_version    = var.database_version
-
-  depends_on = [google_service_networking_connection.vpc_psc]
-
+  depends_on          = [google_service_networking_connection.vpc_psc]
+  encryption_key_name = google_kms_crypto_key.webapp_sql_key.id
   settings {
     tier              = var.database_tier
     disk_size         = var.database_disk_size

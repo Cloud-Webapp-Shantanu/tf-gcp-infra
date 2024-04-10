@@ -71,5 +71,4 @@ variable "cloudfunction_sa_description" {
 variable "cloudfunction_sa_display_name" {
   type        = string
   description = "The display name of the service account for the Cloud Function"
-
 }

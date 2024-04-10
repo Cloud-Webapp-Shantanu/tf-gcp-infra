@@ -8,6 +8,11 @@ variable "source_ranges" {
   type        = list(string)
 }
 
+variable "source_ranges_internet" {
+  type        = list(string)
+  description = "The source ranges to allow internet traffic from"
+}
+
 variable "target_tags" {
   description = "The target tags for the firewall rule"
   type        = list(string)
